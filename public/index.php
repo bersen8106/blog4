@@ -3,14 +3,17 @@
 define("ROOT", dirname(__DIR__));
 define("SRC", ROOT . '/src');
 define("VIEWS", SRC . '/views');
+define("TEMPLATES", SRC . '/views/templates');
 
-echo 'Hello, this is point of entry from index.php';
+require_once '../src/views/layout.php';
 
-$uri = trim($_SERVER['REQUEST_URI'], '/' );
-
-if ($uri === '') {
-    require VIEWS . '/layout.php';
-}
+//echo 'Hello, this is point of entry from index.php';
+//
+//$uri = trim($_SERVER['REQUEST_URI'], '/' );
+//
+//if ($uri === '') {
+//    require VIEWS . '/layout.php';
+//}
 //elseif ($uri == 'home.php'){
 //    require VIEWS . '/home.php';
 //}
