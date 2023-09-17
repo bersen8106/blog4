@@ -7,7 +7,9 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 <!--    <script src="https://cdn.tailwindcss.com"></script>-->
     <link href="../../public/assets/css/output.css" rel="stylesheet">
+    <link href="../../public/assets/css/style.css" rel="stylesheet">
     <title>Document</title>
+
 </head>
 <body class="min-h-screen">
 <div class="flex flex-col h-screen">
@@ -30,5 +32,8 @@
     ?>
 
 </div>
+
+
+<script src="public/assets/js/main.js"></script>
 </body>
 </html>
