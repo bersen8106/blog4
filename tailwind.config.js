@@ -13,6 +13,7 @@ module.exports = {
     },
   },
   plugins: [
+    require('@tailwindcss/forms'),
     // Здесь вы можете подключить дополнительные плагины
   ],
 }

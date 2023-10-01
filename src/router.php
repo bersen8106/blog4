@@ -1,9 +1,22 @@
 <?php
-
 $uri = trim($_SERVER['REQUEST_URI'], '/' );
-
 if ($uri === '') {
     require TEMPLATES . '/home.php';
+}
+elseif ($uri == 'login.php'){
+    require VIEWS . '/templates/login.php';
+}
+elseif ($uri == 'register.php'){
+    require VIEWS . '/templates/register.php';
+}
+elseif ($uri == 'src/actions/register_controller.php') {
+    require '../src/actions/register_controller.php';
+}
+elseif ($uri == 'src/actions/registration_success.php') {
+    require '../src/actions/registration_success.php';
+}
+elseif ($uri == 'src/actions/authenticate_controller.php') {
+    require '../src/actions/authenticate_controller.php';
 }
 //elseif ($uri == 'home.php'){
 //    require VIEWS . '/home.php';
@@ -11,9 +24,9 @@ if ($uri === '') {
 //elseif ($uri == 'about.php') {
 //    require VIEWS . '/about.php';
 //}
-//else{
-//    require VIEWS . '/404.php';
-//}
+else{
+    require VIEWS . '/templates/404.php';
+}
 
 // Список маршрутов
 //$routes = [
