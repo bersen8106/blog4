@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html class="h-full bg-white" lang="en">
 <head>
@@ -12,9 +15,7 @@
 
 </head>
 <body class="min-h-screen h-full">
-<?php
-session_start();
-?>
+
 <div class="flex flex-col h-screen">
 
     <?php
