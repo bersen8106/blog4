@@ -13,11 +13,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = $_POST['email'];
     $password = $_POST['password'];
     $passwordConfirmation = $_POST['passwordConfirmation'];
+    $fileUpload = $_FILES['fileUpload'];
+//    var_dump($fileUpload);
+//    die();
 
 
 
     // Создание нового объекта пользователя
-    $user = new User($firstName, $lastName, $email, $password, $passwordConfirmation);
+    $user = new User($firstName, $lastName, $email, $password, $passwordConfirmation, $fileUpload);
 //    echo '<pre>';
 //    print_r($user);
 //    echo '</pre>';

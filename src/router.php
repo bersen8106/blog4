@@ -18,6 +18,9 @@ elseif ($uri == 'src/actions/registration_success.php') {
 elseif ($uri == 'src/actions/authenticate_controller.php') {
     require '../src/actions/authenticate_controller.php';
 }
+elseif ($uri == 'logout.php') {
+    require ACTIONS . '/logout.php';
+}
 //elseif ($uri == 'home.php'){
 //    require VIEWS . '/home.php';
 //}

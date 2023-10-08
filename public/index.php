@@ -3,6 +3,7 @@
 define("ROOT", dirname(__DIR__));
 define("SRC", ROOT . '/src');
 define("VIEWS", SRC . '/views');
+define("ACTIONS", SRC . '/actions');
 define("TEMPLATES", SRC . '/views/templates');
 
 require_once '../src/views/layout.php';

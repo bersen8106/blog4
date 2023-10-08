@@ -9,8 +9,9 @@ class User {
     private $email;
     private $password;
     private $passwordConfirmation;
+    private $fileUpload;
 
-    public function __construct($firstName, $lastName, $email, $password, $passwordConfirmation)
+    public function __construct($firstName, $lastName, $email, $password, $passwordConfirmation, $fileUpload)
     {
         $this->conn = Database::getInstance()->getConnection();
         $this->firstName = $firstName;
@@ -18,6 +19,7 @@ class User {
         $this->email = $email;
         $this->password = $password;
         $this->passwordConfirmation = $passwordConfirmation;
+        $this->fileUpload = $fileUpload;
     }
 
     // Метод для добавления пользователя в базу данных
@@ -35,16 +37,22 @@ class User {
         // Хэширование пароля с использованием соли
         $hashedPassword = password_hash($this->password . $salt, PASSWORD_DEFAULT);
 
-        // Подготовка SQL-запроса для вставки данных пользователя
-        $stmt = $this->conn->prepare("INSERT INTO users (`name`, last_name, email, password_hash, salt) VALUES (?, ?, ?, ?, ?)");
-        $stmt->bind_param("sssss", $this->firstName, $this->lastName, $this->email, $hashedPassword, $salt);
+        $imageData = file_get_contents($this->fileUpload['tmp_name']);
+//        var_dump($imageData);
+//        die();
 
-        // Выполнение SQL-запроса
+        // Подготовка SQL-запроса для вставки данных пользователя
+//        $stmt = $this->conn->prepare("INSERT INTO users (`name`, last_name, email, password_hash, salt, profile_picture) VALUES (?, ?, ?, ?, ?, ?)");
+//        $stmt->bind_param("sssssb", $this->firstName, $this->lastName, $this->email, $hashedPassword, $salt, $imageData);
+        $stmt = $this->conn->prepare("INSERT INTO users (first_name, last_name, email, password_hash, salt, profile_picture) VALUES (?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param("ssssss", $this->firstName, $this->lastName, $this->email, $hashedPassword, $salt, $imageData);
+
+
         if ($stmt->execute()) {
-            // Пользователь успешно добавлен в базу данных
+//      Пользователь успешно добавлен в базу данных
             return true;
         } else {
-            // Обработка ошибки добавления пользователя
+//      Обработка ошибки добавления пользователя
             return false;
         }
     }
@@ -74,6 +82,48 @@ class User {
             return false; // Пользователь с указанным email не найден
         }
     }
+
+    public function getProfilePicture($userId) {
+        // Экранируем идентификатор пользователя для предотвращения SQL-инъекций
+        $safeUserId = mysqli_real_escape_string($this->conn, $userId);
+
+        // Формируем SQL-запрос
+        $sql = "SELECT profile_picture FROM users WHERE id = '$safeUserId'";
+
+        // Выполняем запрос
+        $result = mysqli_query($this->conn, $sql);
+
+        // Проверяем успешность выполнения запроса
+        if ($result) {
+            // Получаем результат запроса в виде ассоциативного массива
+            $row = mysqli_fetch_assoc($result);
+
+            // Получаем значение поля profile_picture
+            $profilePictureData = $row['profile_picture'];
+
+            // Освобождаем ресурсы результата запроса
+            mysqli_free_result($result);
+
+            return $profilePictureData;
+        } else {
+            // Обработка ошибки выполнения запроса
+            return null;
+        }
+    }
 }
+
+//        Выполнение SQL-запроса
+//        $result = $stmt->execute();
+//
+//        if ($result === false) {
+//            // Ошибка при выполнении запроса
+//            $error = $stmt->error;
+//            // Обработка ошибки, например, вывод сообщения или запись в журнал
+//            echo "Ошибка при выполнении запроса: " . $error;
+//        } else {
+//            // Запрос выполнен успешно
+//            echo "Данные успешно вставлены в базу данных.";
+//            return false;
+//        }
 
 //echo "Ошибка при выполнении SQL-запроса: " . $stmt->error;
